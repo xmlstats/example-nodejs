@@ -1,7 +1,8 @@
 # Node.js Example
-============
+=================
 
-This is a simple Node.js web app that accesses data from the xmlstats API.
+This is a simple web app that accesses the [xmlstats](https://erikberg.com/api) API
+using Node.js.
 
 Requirements
 ------------
