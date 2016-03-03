@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Oops
+    link(rel="stylesheet", href="style.css")
+  body
+    header
+      h1 Oops
+
+    section(id="main")
+      div
+        p HTTP Status code: #{code}
+        p= reason
+
+    footer
+      div
+        p
+          a(href="https://erikberg.com/api") xmlstats

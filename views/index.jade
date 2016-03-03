@@ -1,0 +1,67 @@
+- var navdate = function(d, diff) {
+-   var nd = moment.tz(d, "America/New_York");
+-   if (diff > 0) {
+-     nd.add(1, 'days');
+-   } else {
+-     nd.subtract(1, 'days');
+-   }
+-   return nd.format('YYYYMMDD');
+- }
+
+mixin eventTable(evt)
+  if evt.event_status === 'completed'
+    - var homewin = (evt.home_points_scored > evt.away_points_scored) ? 1 : 0
+    tr
+      td(class=!homewin ? 'win' : 'loss')= evt.away_team.full_name
+      td= evt.away_points_scored
+    tr
+      td(class=homewin ? 'win' : 'loss')= evt.home_team.full_name
+      td= evt.home_points_scored
+  else
+    tr
+      td= evt.away_team.full_name
+      td(rowspan="2")= moment.tz(evt.start_date_time, "America/New_York").format('h:mm A')
+    tr
+      td= evt.home_team.full_name
+
+
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Schedule/Results for #{events.events_date}
+    link(rel="stylesheet", href="style.css")
+  body
+    header
+      h1= header
+
+    nav.
+      #[a(href="/" + navdate(events.events_date, -1)) Previous] |
+      #[a(href="/") Today] |
+      #[a(href="/" + navdate(events.events_date, 1)) Next]
+
+    section(id="main")
+      if events.event.length == 0
+        p No games scheduled.
+      each evt in events.event
+        table
+          thead
+            tr
+              if evt.event_status === 'completed'
+                th(colspan="2") Final
+              else
+                th.ucfirst(colspan="2")= evt.event_status
+          tbody
+              +eventTable(evt)
+          tfoot
+            tr
+              td(colspan="2")= evt.site.name
+            tr
+              td(colspan="2")= evt.site.city + ', ' + evt.site.state
+
+    footer
+      div
+        p
+          a(href="https://erikberg.com/api") xmlstats
+
