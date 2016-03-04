@@ -1,4 +1,4 @@
-# Node.js Example
+Node.js Example
 =================
 
 This is a simple web app that accesses the [xmlstats](https://erikberg.com/api) API
@@ -12,6 +12,11 @@ Getting Started
 ---------------
 Clone the repository.
 
+### Install Dependencies
+```
+npm install
+```
+
 ### Configure
 Specify your API access token and e-mail address in `config.json`.
 
@@ -21,4 +26,3 @@ node index.js
 ```
 
 Point your web browser to http://localhost:8000.
-
