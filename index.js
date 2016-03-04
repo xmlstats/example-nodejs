@@ -1,7 +1,7 @@
 var express = require('express');
 var https = require('https');
 var moment = require('moment-timezone');
-var NodeCache = require('node-cache');
+var nodeCache = require('node-cache');
 var util = require('util');
 var zlib = require('zlib');
 
@@ -13,7 +13,7 @@ var shortDate = 'YYYYMMDD';
 var longDate = 'dddd, MMMM D, YYYY';
 
 // instruct cache to keep items for 10 minutes
-var cache = new NodeCache({ stdTTL: 600 });
+var cache = new nodeCache({ stdTTL: 600 });
 
 var app = express();
 app.set('view engine', 'jade');
@@ -75,8 +75,8 @@ app.get('/:id?', function (req, res) {
 function httpGet(url, callback) {
   var data = cache.get(url);
   if (data) {
-      callback(200, 'application/json', data);
-      return;
+    callback(200, 'application/json', data);
+    return;
   }
 
   var options = {
@@ -91,7 +91,7 @@ function httpGet(url, callback) {
 
   var req = https.get(options, function(res) {
     var content;
-    var data = '';
+    var data = [];
 
     if (res.headers['content-encoding'] === 'gzip') {
       var gzip = zlib.createGunzip();
@@ -102,13 +102,12 @@ function httpGet(url, callback) {
     }
 
     content.on('data', function (chunk) {
-      chunk = chunk.toString('utf-8');
-      data += chunk;
+      data.push(chunk);
     });
 
     content.on('end', function() {
-      data = JSON.parse(data);
-      callback(res.statusCode, res.headers['content-type'], data);
+      var json = JSON.parse(Buffer.concat(data));
+      callback(res.statusCode, res.headers['content-type'], json);
     });
   });
 
@@ -126,7 +125,6 @@ function formatDate(date, fmt) {
 // for an explanation
 function buildUrl(opts) {
   var ary = [opts.sport, opts.endpoint, opts.id];
-  var paramList = [];
 
   var path = ary.filter(function (element) {
     return element !== undefined;
@@ -135,6 +133,7 @@ function buildUrl(opts) {
 
   // check for parameters and create parameter string
   if (opts.params) {
+    var paramList = [];
     for (var key in opts.params) {
       if (opts.params.hasOwnProperty(key)) {
         paramList.push(util.format('%s=%s',
