@@ -24,15 +24,15 @@ app.locals.moment = require('moment-timezone');
 // See https://erikberg.com/api/endpoints#requrl Request URL Convention
 // for an explanation
 var xmlstatsUrl = {
-    host: 'erikberg.com',
-    sport: undefined,
-    endpoint: 'events',
-    id: undefined,
-    format: 'json',
-    params: {
-      sport: 'nba',
-      date: ''
-    }
+  host: 'erikberg.com',
+  sport: undefined,
+  endpoint: 'events',
+  id: undefined,
+  format: 'json',
+  params: {
+    sport: 'nba',
+    date: ''
+  }
 };
 
 // This web app responds to requests to "GET /" and "GET /yyyyMMdd"
