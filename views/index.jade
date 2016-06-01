@@ -45,20 +45,21 @@ html
       if events.event.length == 0
         p No games scheduled.
       each evt in events.event
-        table
-          thead
-            tr
-              if evt.event_status === 'completed'
-                th(colspan="2") Final
-              else
-                th.ucfirst(colspan="2")= evt.event_status
-          tbody
-              +eventTable(evt)
-          tfoot
-            tr
-              td(colspan="2")= evt.site.name
-            tr
-              td(colspan="2")= evt.site.city + ', ' + evt.site.state
+        div(class="event")
+          table
+            thead
+              tr
+                if evt.event_status === 'completed'
+                  th(colspan="2") Final
+                else
+                  th.ucfirst(colspan="2")= evt.event_status
+            tbody
+                +eventTable(evt)
+            tfoot
+              tr
+                td(colspan="2")= evt.site.name
+              tr
+                td(colspan="2")= evt.site.city + ', ' + evt.site.state
 
     footer
       div

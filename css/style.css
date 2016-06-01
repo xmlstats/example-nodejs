@@ -7,6 +7,11 @@ body {
   flex-direction: column;
 }
 
+div.event {
+  flex: 0 0 29%;
+  margin: 2%;
+}
+
 table {
   width: 100%;
   max-width: 300px;
@@ -63,7 +68,6 @@ td.win {
   width: 100%;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
   align-content: flex-start;
   flex: 1 0 auto;
 }
